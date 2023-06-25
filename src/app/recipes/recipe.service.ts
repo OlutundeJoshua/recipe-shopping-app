@@ -8,26 +8,33 @@ import { Subject } from "rxjs";
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes:Recipe[] = [
-    new Recipe(
-      'A test Recipe', 
-      'this is simply a test', 
-      'https://www.deliciousmagazine.co.uk/wp-content/uploads/2022/01/DEL_2022_Q1_SAM_FOLAN_SAVILLE_ORANGE_CHICKEN_WITH_NDUJA_HARICOT_BEANS0289-_960x1200.jpg',
-      [
-        new Ingredient('Meat', 10),
-        new Ingredient('Fries', 10),
-      ]),
-    new Recipe(
-      'Another test Recipe', 
-      'this is simply a test', 
-      'https://www.deliciousmagazine.co.uk/wp-content/uploads/2022/01/DEL_2022_Q1_SAM_FOLAN_SAVILLE_ORANGE_CHICKEN_WITH_NDUJA_HARICOT_BEANS0289-_960x1200.jpg',
-      [
-        new Ingredient('Bread', 2),
-        new Ingredient('Beef', 6)
-      ])
-    ];
+  // private recipes:Recipe[] = [
+  //   new Recipe(
+  //     'A test Recipe', 
+  //     'this is simply a test', 
+  //     'https://www.deliciousmagazine.co.uk/wp-content/uploads/2022/01/DEL_2022_Q1_SAM_FOLAN_SAVILLE_ORANGE_CHICKEN_WITH_NDUJA_HARICOT_BEANS0289-_960x1200.jpg',
+  //     [
+  //       new Ingredient('Meat', 10),
+  //       new Ingredient('Fries', 10),
+  //     ]),
+  //   new Recipe(
+  //     'Another test Recipe', 
+  //     'this is simply a test', 
+  //     'https://www.deliciousmagazine.co.uk/wp-content/uploads/2022/01/DEL_2022_Q1_SAM_FOLAN_SAVILLE_ORANGE_CHICKEN_WITH_NDUJA_HARICOT_BEANS0289-_960x1200.jpg',
+  //     [
+  //       new Ingredient('Bread', 2),
+  //       new Ingredient('Beef', 6)
+  //     ])
+  //   ];
+
+  private recipes: Recipe[] = []
 
   constructor(private slService: ShoppingListService) {}
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
   getRecipes() {
     return this.recipes.slice();
